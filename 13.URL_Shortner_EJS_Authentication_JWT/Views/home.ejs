@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello From Server</h1>
+  <% if (locals.id) { %>
+    <p>URL Generated: <a href="http://localhost:8000/url/visit/<%= id %>">http://localhost:8000/url/visit/<%= id %></a></p>
+  <% } %>
+  
+  <div>
+    <form method="post" action="/url/">
+      <label>Enter URL </label>
+      <input name="url" type="text" placeholder="www.example.com" required>
+      <button type="submit">Generate</button>
+    </form>
+  </div>
+  
+  <div>
+    <% if (locals.urls) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>S No.</th>
+            <th>Short ID</th>
+            <th>Redirect</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= url.shortId %></td>
+              <td><a href="<%= url.redirectedURL %>"><%= url.redirectedURL %></a></td>
+              <td><%= url.visitHistory.length %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</body>
+</html>
